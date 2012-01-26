@@ -277,13 +277,22 @@ int findBlockIndicesFromContent(char *fileContent, int threadCount,int size,stru
         return size;
 
 }
-int main() {
+int main(int argc,char *argv[]) {
 
 //	pthread_t t1,t2,t3,t4,t5;
 
+	if(argc!=3) {
+		printf("USAGE : ./log_stats path_to_log_file path_to_process_list_file\n");
+		return -1;
+	}
+		
+	strcpy(logFileName,argv[1]);
+	char procFileName[50];
+	strcpy(procFileName,argv[2]);
+
+
+	numProc = getProcList(procFileName);
 	numThread = 2;
-	strcpy(logFileName,"logfile");
-	numProc = getProcList("pList");
 	init(numProc,numThread);
 
 	int fileSize = findBlockIndices(logFileName,numThread);
